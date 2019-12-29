@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vdmitriy.homeaccounting.api.Payment;
 import ru.vdmitriy.homeaccounting.api.PaymentBuilder;
+import ru.vdmitriy.homeaccounting.api.PaymentRepository;
+import ru.vdmitriy.homeaccounting.beans.PaymentImpl;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,16 +16,21 @@ import java.util.UUID;
 public class PaymentController {
 
     private final PaymentBuilder paymentBuilder;
+    private final PaymentRepository repository;
 
     @Autowired
-    public PaymentController(PaymentBuilder paymentBuilder) {
+    public PaymentController(PaymentBuilder paymentBuilder,
+                             PaymentRepository repository) {
         this.paymentBuilder = paymentBuilder;
+        this.repository = repository;
     }
 
     @RequestMapping("/payment")
     public String payment(){
-        Payment payment = getTestPayment();
+        PaymentImpl payment = (PaymentImpl) getTestPayment();
         System.out.println(payment.toString());
+        repository.save(payment);
+        System.out.println(repository.count());
         return payment.toString();
     }
 

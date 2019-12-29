@@ -2,13 +2,17 @@ package ru.vdmitriy.homeaccounting.beans;
 
 import ru.vdmitriy.homeaccounting.api.Payment;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Entity
 public final class PaymentImpl implements Payment {
 
     private String name;
 
+    @Id
     private String uuid;
 
     private String categoryUuid;
