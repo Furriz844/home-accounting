@@ -2,14 +2,12 @@ package ru.vdmitriy.homeaccounting.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.vdmitriy.homeaccounting.api.Payment;
 import ru.vdmitriy.homeaccounting.api.PaymentBuilder;
 import ru.vdmitriy.homeaccounting.api.PaymentRepository;
 import ru.vdmitriy.homeaccounting.beans.PaymentImpl;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @RestController
@@ -26,21 +24,12 @@ public class PaymentController {
     }
 
     @RequestMapping("/payment")
-    public String payment(){
-        PaymentImpl payment = (PaymentImpl) getTestPayment();
-        System.out.println(payment.toString());
-        repository.save(payment);
-        System.out.println(repository.count());
-        return payment.toString();
+    public PaymentImpl getPayment(@RequestParam String uuid) {
+        return repository.getPaymentByUuid(uuid);
     }
 
-//    @RequestParam String name,
-//    @RequestParam String comment,
-//    @RequestParam double amount,
-//    @RequestParam boolean proceed,
-//    @RequestParam boolean profit
     @PostMapping("/payment/add")
-    public void createPayment(@RequestBody PaymentImpl payment){
+    public void createPayment(@RequestBody PaymentImpl payment) {
         System.out.println(payment.toString());
         PaymentImpl paymentImpl = (PaymentImpl) paymentBuilder.build(payment.getName(),
                 UUID.randomUUID().toString(),
@@ -54,24 +43,38 @@ public class PaymentController {
         repository.save(paymentImpl);
     }
 
-    @RequestMapping("/payment/all")
-    public String getAllPayments(){
-        Iterable<PaymentImpl> paymentList = repository.findAll();
-        StringBuilder sb = new StringBuilder();
-        paymentList.forEach(p->sb.append(p.toString()).append("<br>"));
-        return sb.toString();
+    @PostMapping("/payment/update")
+    public String updatePayment(
+            @RequestParam String uuid,
+            @RequestBody PaymentImpl payment) {
+        PaymentImpl paymentImpl = repository.getPaymentByUuid(uuid);
+        if (Objects.isNull(paymentImpl)) {
+            return "Object not found";
+        }
+        paymentImpl.setName(payment.getName());
+        paymentImpl.setComment(payment.getComment());
+        paymentImpl.setValue(payment.getValue());
+        paymentImpl.setProceed(payment.isProceed());
+        paymentImpl.setProfit(payment.isProfit());
+        repository.save(paymentImpl);
+        return "ok";
     }
 
-    public Payment getTestPayment(){
-        Payment payment = (Payment) paymentBuilder.build("Test payment",
-                UUID.randomUUID().toString(),
-                UUID.randomUUID().toString(),
-                UUID.randomUUID().toString(),
-                "Test payment for application",
-                BigDecimal.valueOf(200),
-                true,
-                false,
-                LocalDateTime.now());
-        return payment;
+    @RequestMapping("/payment/delete")
+    public String deletePayment(@RequestParam String uuid) {
+        PaymentImpl paymentImpl = repository.getPaymentByUuid(uuid);
+        if (Objects.isNull(paymentImpl)) {
+            return "Object not found";
+        }
+        repository.delete(paymentImpl);
+        return ("ok");
+    }
+
+    @RequestMapping("/payment/all")
+    public String getAllPayments() {
+        Iterable<PaymentImpl> paymentList = repository.findAll();
+        StringBuilder sb = new StringBuilder();
+        paymentList.forEach(p -> sb.append(p.toString()).append("<br>"));
+        return sb.toString();
     }
 }
