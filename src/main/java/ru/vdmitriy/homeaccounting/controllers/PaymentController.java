@@ -30,11 +30,10 @@ public class PaymentController {
 
     @PostMapping("/payment/add")
     public void createPayment(@RequestBody PaymentImpl payment) {
-        System.out.println(payment.toString());
         PaymentImpl paymentImpl = (PaymentImpl) paymentBuilder.build(payment.getName(),
                 UUID.randomUUID().toString(),
                 UUID.randomUUID().toString(),
-                UUID.randomUUID().toString(),
+                payment.getWalletUuid(),
                 payment.getComment(),
                 payment.getValue(),
                 payment.isProceed(),
@@ -71,10 +70,7 @@ public class PaymentController {
     }
 
     @RequestMapping("/payment/all")
-    public String getAllPayments() {
-        Iterable<PaymentImpl> paymentList = repository.findAll();
-        StringBuilder sb = new StringBuilder();
-        paymentList.forEach(p -> sb.append(p.toString()).append("<br>"));
-        return sb.toString();
+    public Iterable<PaymentImpl> getAllPayments() {
+        return repository.findAll();
     }
 }

@@ -5,4 +5,6 @@ import ru.vdmitriy.homeaccounting.beans.PaymentImpl;
 
 public interface PaymentRepository extends CrudRepository<PaymentImpl, Long> {
     PaymentImpl getPaymentByUuid(String uuid);
+
+    Iterable<PaymentImpl> getPaymentsByWalletUuid(String walletUuid);
 }
