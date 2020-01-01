@@ -10,4 +10,14 @@ public interface Wallet {
     String getWalletTypeId();
 
     String getCurrencyCode();
+
+    void setName(String name);
+
+    void setDescription(String description);
+
+    void setWalletId(String walletId);
+
+    void setWalletTypeId(String walletTypeId);
+
+    void setCurrencyCode(String currencyCode);
 }
