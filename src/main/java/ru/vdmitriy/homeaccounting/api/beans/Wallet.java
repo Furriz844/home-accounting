@@ -1,5 +1,8 @@
 package ru.vdmitriy.homeaccounting.api.beans;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 public interface Wallet {
     String getName();
 
@@ -11,6 +14,8 @@ public interface Wallet {
 
     String getCurrencyCode();
 
+    BigDecimal getStartValue();
+
     void setName(String name);
 
     void setDescription(String description);
@@ -20,4 +25,10 @@ public interface Wallet {
     void setWalletTypeId(String walletTypeId);
 
     void setCurrencyCode(String currencyCode);
+
+    void setStartValue(BigDecimal startValue);
+
+    BigDecimal getCurrentValue();
+
+    void setCurrentValue(BigDecimal currentValue);
 }
