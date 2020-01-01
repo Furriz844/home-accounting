@@ -1,8 +1,8 @@
 package ru.vdmitriy.homeaccounting.builders;
 
 import org.springframework.stereotype.Component;
-import ru.vdmitriy.homeaccounting.api.Payment;
-import ru.vdmitriy.homeaccounting.api.PaymentBuilder;
+import ru.vdmitriy.homeaccounting.api.beans.Payment;
+import ru.vdmitriy.homeaccounting.api.builders.PaymentBuilder;
 import ru.vdmitriy.homeaccounting.beans.PaymentImpl;
 
 import java.math.BigDecimal;

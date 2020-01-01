@@ -2,8 +2,8 @@ package ru.vdmitriy.homeaccounting.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.vdmitriy.homeaccounting.api.PaymentBuilder;
-import ru.vdmitriy.homeaccounting.api.PaymentRepository;
+import ru.vdmitriy.homeaccounting.api.builders.PaymentBuilder;
+import ru.vdmitriy.homeaccounting.api.repo.PaymentRepository;
 import ru.vdmitriy.homeaccounting.beans.PaymentImpl;
 
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package ru.vdmitriy.homeaccounting.api;
+package ru.vdmitriy.homeaccounting.api.beans;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package ru.vdmitriy.homeaccounting.api;
+package ru.vdmitriy.homeaccounting.api.repo;
 
 import org.springframework.data.repository.CrudRepository;
 import ru.vdmitriy.homeaccounting.beans.PaymentImpl;

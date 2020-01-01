@@ -1,4 +1,4 @@
-package ru.vdmitriy.homeaccounting.api;
+package ru.vdmitriy.homeaccounting.api.beans;
 
 public interface PaymentCategory {
     String getCategoryId();

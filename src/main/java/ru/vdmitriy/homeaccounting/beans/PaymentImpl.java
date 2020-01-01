@@ -1,6 +1,6 @@
 package ru.vdmitriy.homeaccounting.beans;
 
-import ru.vdmitriy.homeaccounting.api.Payment;
+import ru.vdmitriy.homeaccounting.api.beans.Payment;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

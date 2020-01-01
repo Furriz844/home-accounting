@@ -1,6 +1,6 @@
 package ru.vdmitriy.homeaccounting.beans;
 
-import ru.vdmitriy.homeaccounting.api.Wallet;
+import ru.vdmitriy.homeaccounting.api.beans.Wallet;
 
 public class WalletImpl implements Wallet {
 

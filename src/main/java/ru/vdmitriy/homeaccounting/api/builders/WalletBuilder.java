@@ -1,4 +1,4 @@
-package ru.vdmitriy.homeaccounting.api;
+package ru.vdmitriy.homeaccounting.api.builders;
 
 public interface WalletBuilder {
     Object build(String name,
