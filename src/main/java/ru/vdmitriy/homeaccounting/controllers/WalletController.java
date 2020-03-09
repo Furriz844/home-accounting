@@ -6,9 +6,9 @@ import ru.vdmitriy.homeaccounting.api.beans.Accounter;
 import ru.vdmitriy.homeaccounting.api.beans.Wallet;
 import ru.vdmitriy.homeaccounting.api.builders.WalletBuilder;
 import ru.vdmitriy.homeaccounting.api.repo.WalletRepository;
-import ru.vdmitriy.homeaccounting.beans.PaymentImpl;
 import ru.vdmitriy.homeaccounting.beans.WalletImpl;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -30,15 +30,16 @@ public class WalletController {
 
     @RequestMapping("/wallet")
     public Wallet getWallet(@RequestParam String uuid) {
-        Wallet wallet = repository.findById(uuid).get();
-        wallet.setCurrentValue(accounter.calculateCurrentAmount(wallet));
+        Wallet wallet = repository.getById(uuid);
+        //todo calculate by sql
+        //wallet.setCurrentValue(accounter.calculateCurrentAmount(wallet));
         return wallet;
     }
 
     @RequestMapping("wallet/all")
     //todo rewrite find and findAll to recalculate currentValue
-    public Iterable<WalletImpl> getAllWallets() {
-        return repository.findAll();
+    public List<WalletImpl> getAllWallets() {
+        return repository.getAll();
     }
 
     @PostMapping("wallet/add")
@@ -52,13 +53,13 @@ public class WalletController {
                 .setCurrencyCode(wallet.getCurrencyCode())
                 .setStartValue(wallet.getStartValue())
                 .build();
-        repository.save(walletImpl);
+        repository.insert(walletImpl);
         return walletId;
     }
 
     @RequestMapping("/wallet/delete")
     public String deleteWallet(@RequestParam String uuid) {
-        WalletImpl wallet = repository.findById(uuid).get();
+        WalletImpl wallet = repository.getById(uuid);
         if (Objects.isNull(wallet)) {
             return "Object not found";
         }
@@ -71,7 +72,7 @@ public class WalletController {
     public String updateWallet(
             @RequestParam String uuid,
             @RequestBody WalletImpl wallet) {
-        WalletImpl walletImpl = repository.findById(uuid).get();
+        WalletImpl walletImpl = repository.getById(uuid);
         if (Objects.isNull(walletImpl)) {
             return "Object not found";
         }
@@ -81,7 +82,7 @@ public class WalletController {
         walletImpl.setWalletTypeId(wallet.getWalletTypeId());
         walletImpl.setCurrencyCode(wallet.getCurrencyCode());
         walletImpl.setStartValue(wallet.getStartValue());
-        repository.save(walletImpl);
+        repository.insert(walletImpl);
         return "ok";
     }
 }

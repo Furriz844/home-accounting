@@ -1,7 +1,6 @@
 package ru.vdmitriy.homeaccounting.api.beans;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 public interface Wallet {
     String getName();
