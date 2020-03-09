@@ -44,12 +44,14 @@ public class WalletController {
     @PostMapping("wallet/add")
     public String createWallet(@RequestBody WalletImpl wallet) {
         String walletId = UUID.randomUUID().toString();
-        WalletImpl walletImpl = (WalletImpl) builder.build(wallet.getName(),
-                wallet.getDescription(),
-                walletId,
-                wallet.getWalletTypeId(),
-                wallet.getCurrencyCode(),
-                wallet.getStartValue());
+        WalletImpl walletImpl = (WalletImpl) builder.setName(wallet.getName())
+                .setDescription(wallet.getDescription())
+                //todo generate walletId in builder
+                .setWalletId(walletId)
+                .setWalletTypeId(wallet.getWalletTypeId())
+                .setCurrencyCode(wallet.getCurrencyCode())
+                .setStartValue(wallet.getStartValue())
+                .build();
         repository.save(walletImpl);
         return walletId;
     }

@@ -31,6 +31,7 @@ public class PaymentController {
     @PostMapping("/payment/add")
     public void createPayment(@RequestBody PaymentImpl payment) {
         PaymentImpl paymentImpl = (PaymentImpl) paymentBuilder.setName(payment.getName()).
+                //todo generate uuid in builder
                 setUuid(UUID.randomUUID().toString())
                 .setCategoryUuid(UUID.randomUUID().toString())
                 .setWalletUuid(payment.getWalletUuid())
